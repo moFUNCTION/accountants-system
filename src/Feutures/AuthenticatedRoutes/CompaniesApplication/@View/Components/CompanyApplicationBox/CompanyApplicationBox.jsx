@@ -8,7 +8,8 @@ import {
   TagLabel,
   Flex,
   Button,
-  Modal,
+  Image,
+  Center,
 } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
 import { ar } from "date-fns/locale";
@@ -16,6 +17,11 @@ import { Link } from "react-router-dom";
 
 export const CompanyApplicationBox = ({
   user,
+  companyName,
+  taxNumber,
+  responsiblePersonName,
+  responsiblePersonPhone,
+  logo,
   RequestStatus,
   createdAt,
   updatedAt,
@@ -42,11 +48,26 @@ export const CompanyApplicationBox = ({
       textAlign="right"
       transition="0.3s"
       _hover={{
-        translate: "0% -7px",
+        transform: "translateY(-7px)",
         boxShadow: "xl",
       }}
     >
       <VStack align="stretch" spacing={4}>
+        {logo ? (
+          <Image
+            w="100px"
+            h="100px"
+            src={logo}
+            alt="Company Logo"
+            borderRadius="md"
+            boxSize="100px"
+          />
+        ) : (
+          <Center p="1" w="100px" h="100px" bgColor="gray.200">
+            <Text>شعار الشركة</Text>
+          </Center>
+        )}
+
         <Box>
           <Text fontWeight="bold" fontSize="lg">
             تفاصيل المستخدم
@@ -57,29 +78,33 @@ export const CompanyApplicationBox = ({
           <Text>الدور: {user?.role}</Text>
         </Box>
 
+        <Box>
+          <Text fontWeight="bold" fontSize="lg">
+            تفاصيل الشركة
+          </Text>
+          <Text>اسم الشركة: {companyName}</Text>
+          <Text>رقم الضريبة: {taxNumber}</Text>
+          <Text>اسم المسؤول: {responsiblePersonName}</Text>
+          <Text>هاتف المسؤول: {responsiblePersonPhone}</Text>
+        </Box>
+
         <HStack>
           <Text fontWeight="bold">حالة الطلب:</Text>
           <Tag
-            colorScheme={(() => {
-              if (RequestStatus === "pending") {
-                return "yellow";
-              } else if (RequestStatus === "approved") {
-                return "green";
-              } else {
-                return "red";
-              }
-            })()}
+            colorScheme={
+              RequestStatus === "pending"
+                ? "yellow"
+                : RequestStatus === "approved"
+                ? "green"
+                : "red"
+            }
           >
             <TagLabel>
-              {(() => {
-                if (RequestStatus === "pending") {
-                  return "قيد الانتظار";
-                } else if (RequestStatus === "approved") {
-                  return "تم الموافقة عليه";
-                } else {
-                  return "لم يتم الموافقة عليه";
-                }
-              })()}
+              {RequestStatus === "pending"
+                ? "قيد الانتظار"
+                : RequestStatus === "approved"
+                ? "تم الموافقة عليه"
+                : "لم يتم الموافقة عليه"}
             </TagLabel>
           </Tag>
         </HStack>

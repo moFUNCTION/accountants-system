@@ -27,6 +27,12 @@ const AccountantApplication = lazy(() =>
     "./Feutures/AuthenticatedRoutes/AccountantsApplication/@View_{Id}/Index"
   )
 );
+const CompaniesApplication = lazy(() =>
+  import("./Feutures/AuthenticatedRoutes/CompaniesApplication/@View/Index")
+);
+const CompanyApplication = lazy(() =>
+  import("./Feutures/AuthenticatedRoutes/CompaniesApplication/@View_{Id}/Index")
+);
 function App() {
   const { user } = useAuth();
   return (
@@ -94,6 +100,14 @@ function App() {
             <Route
               path="accounants-applications/:id"
               element={<AccountantApplication />}
+            />
+            <Route
+              path="companies-applications"
+              element={<CompaniesApplication />}
+            />
+            <Route
+              path="companies-applications/:id"
+              element={<CompanyApplication />}
             />
           </Route>
         </Routes>

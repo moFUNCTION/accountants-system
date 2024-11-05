@@ -12,7 +12,7 @@ import { MdQuiz } from "react-icons/md";
 import { Pagination } from "../../../../Components/Common/Pagination/Pagination";
 import { useFetch } from "../../../../Hooks/useFetch/useFetch";
 import { useAuth } from "../../../../Context/UserDataContextProvider/UserDataContextProvder";
-import { AccountantApplicationBox } from "./Components/CompanyApplicationBox/CompanyApplicationBox";
+import { CompanyApplicationBox } from "./Components/CompanyApplicationBox/CompanyApplicationBox";
 import NoDataImage from "../../../../Assets/NoData/9264822.jpg";
 import { LazyLoadedImage } from "../../../../Components/Common/LazyLoadedImage/LazyLoadedImage";
 export default function Index() {
@@ -21,7 +21,7 @@ export default function Index() {
   const [page, setPage] = useState(1);
 
   const { data, loading } = useFetch({
-    endpoint: "/accountantApplications",
+    endpoint: "/company",
     params: {
       RequestStatus: RequeistedStatus || "pending",
       limit: 6,
@@ -49,7 +49,7 @@ export default function Index() {
           alignItems="center"
           size="md"
         >
-          اهلا بك في طلبيات المحاسبين
+          اهلا بك في طلبيات الشركات
           <MdQuiz />
         </Heading>
         <Flex>
@@ -84,7 +84,7 @@ export default function Index() {
       >
         {data?.data?.map((application) => {
           return (
-            <AccountantApplicationBox key={application._id} {...application} />
+            <CompanyApplicationBox key={application._id} {...application} />
           );
         })}
         {data?.data?.length === 0 && (
